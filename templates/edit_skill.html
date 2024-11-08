@@ -1,0 +1,56 @@
+{% extends 'common/base.html' %}
+
+
+{% block body %}
+<div class="container mt-5">
+
+    <h2 class="text-center">Add Skill</h2>
+
+    <form class="mt-4 p-4 border rounded bg-light" action="" method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        <input type="text" class="d-none" value="{{seeker_data.id}}" name="skill_id">
+        <!-- Skills -->
+        <div class="mb-3">
+            <label for="skills" class="form-label">Skills</label>
+
+            <select type="text" class="form-control" id="skills" name="skills" required>
+
+                {% if seeker_data.skills %}
+                {% if seeker_data.skills == 'programming' %}
+                <option value="programming" selected>Programming</option>
+                <option value="networking">Networking</option>
+                <option value="hardware">Hardware</option>
+
+                {% elif seeker_data.skills == 'networking' %}
+                <option value="networking" selected>Networking</option>
+                <option value="programming">Programming</option>
+                <option value="hardware">Hardware</option>
+
+                {% elif seeker_data.skills == 'hardware' %}
+                <option value="networking">Networking</option>
+                <option value="programming">Programming</option>
+                <option value="hardware" selected>Hardware</option>
+                {% endif %}
+
+                {% else  %}
+                <option value="programming">Programming</option>
+                <option value="networking">Networking</option>
+                <option value="hardware">Hardware</option>
+
+                {% endif %}
+
+
+            </select>
+        </div>
+
+
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Set Skill</button>
+        </div>
+    </form>
+</div>
+
+{% endblock body %}

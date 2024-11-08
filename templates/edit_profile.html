@@ -1,0 +1,51 @@
+{% extends 'common/base.html' %}
+
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center">Edit Profile</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        
+
+        <div class="mb-3">
+            <label for="username" class="form-label ">Username <span class="bg-warning p-1">You can't
+                    change your
+                    username</span> </label>
+            <input type="text" class="form-control" id="username" name="username" value="{{request.user.username}}"
+                readonly>
+        </div>
+        <div class="mb-3">
+            <label for="firstname" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstname" value="{{request.user.first_name}}" name="firstname"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastname" value="{{request.user.last_name}}" name="lastname"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" value="{{request.user.email}}" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="userType" class="form-label">User Type
+                <span class="bg-warning p-1">You can't change your user type</span></label>
+            <select class="form-select" id="userType" name="user_type">
+
+                {% if request.user.user_type == 'recruiter' %}
+                <option value="recruiter" selected readonly>Recruiter</option>
+                {% elif request.user.user_type == 'job_seeker' %}
+                <option value="job_seeker" selected readonly>Job Seeker</option>
+                {% endif %}
+
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mb-4">Update Profile</button>
+
+    </form>
+</div>
+{% endblock body %}

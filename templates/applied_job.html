@@ -1,0 +1,56 @@
+{% extends 'common/base.html' %}
+
+
+{% block body %}
+
+<div class="container mt-5">
+    <h2 class="text-center">Applied Job List</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover mt-4 align-middle">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th>Job Title</th>
+                    <th>Skills</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+
+
+                <!-- Jobs -->
+
+
+                {% if jobs %}
+                {% for job in jobs %}
+
+                <tr>
+                    <td>{{job.job.title}}</td>
+                    <td>{{job.skills}}</td>
+
+                    <td class="text-success">Applied</td>
+
+
+                </tr>
+
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3">
+                        <p class="alert alert-warning">
+                            Not applied for a single job yet!
+
+                        </p>
+                    </td>
+                </tr>
+                {% endif %}
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock body %}

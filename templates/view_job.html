@@ -1,0 +1,35 @@
+{% extends 'common/base.html' %}
+
+
+{% block body %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center mb-4">{{job.title}}</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <p><strong>Description:</strong> 
+                        {{job.description}}
+                        </p>
+                        <p class="card-text"><strong>Category: </strong>
+
+                            {% if job.category == 'full_time' %}
+                            Full Time
+                            {% elif job.category == 'part_time' %}
+                            Part Time
+                            {% endif %}
+    
+                        </p>
+                        <p class="card-text"><strong>Skills: </strong> {{job.skills|capfirst}}</p>
+                        
+                        <a href="{% url 'editJob' job.id %}" class="btn btn-warning">Edit Job</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}
+    

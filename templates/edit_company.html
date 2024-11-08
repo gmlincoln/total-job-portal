@@ -1,0 +1,28 @@
+{% extends 'common/base.html' %}
+
+
+{% block body %}
+<div class="container mt-5">
+
+    <h2 class="text-center">Update Company Info</h2>
+
+    <form class="mt-4 p-4 border rounded bg-light" action="" method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <!-- Company -->
+        <div class="mb-3">
+            <label for="company" class="form-label">Company Name</label>
+            <input type="text" class="form-control" id="company" name="company" value="{{recruiter_data.company_info}}" required>
+        </div>
+
+
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Update Company Info</button>
+        </div>
+    </form>
+</div>
+
+{% endblock body %}

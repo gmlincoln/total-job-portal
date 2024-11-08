@@ -1,0 +1,123 @@
+{% extends 'common/base.html' %}
+
+{% block body %}
+
+
+<div class="container mt-5">
+    <h2 class="text-center">{{request.user.get_full_name}}'s Profile</h2>
+    <div class="card mt-4">
+        <div class="card-body">
+            <!-- Username Section -->
+            <div class="mb-3">
+                <h5 class="card-title">Username</h5>
+                <p class="card-text">{{request.user.username}}</p>
+            </div>
+
+            <!-- First Name Section -->
+            <div class="mb-3">
+                <h5 class="card-title">First Name</h5>
+                <p class="card-text">{{request.user.first_name}}</p>
+            </div>
+
+            <!-- Last Name Section -->
+            <div class="mb-3">
+                <h5 class="card-title">Last Name</h5>
+                <p class="card-text">{{request.user.last_name}}</p>
+            </div>
+
+            <!-- Email Section -->
+            <div class="mb-3">
+                <h5 class="card-title">Email</h5>
+                <p class="card-text">{{request.user.email}}</p>
+            </div>
+
+            <!-- User Type Section -->
+            <div class="mb-3">
+                <h5 class="card-title">User Type</h5>
+                <p class="card-text">{{request.user.user_type|capfirst}}</p>
+            </div>
+            {% if request.user.user_type == 'job_seeker' %}
+            <!-- User Type Section -->
+            <div class="mb-3">
+                <h5 class="card-title">Skill</h5>
+
+                {% for seeker_data in seeker_info %}
+
+                <p class="card-text">{{seeker_data.skills|capfirst}}</p>
+
+                {% endfor %}
+
+            </div>
+            {% endif %}
+            {% if request.user.user_type == 'recruiter' %}
+            <!-- User Type Section -->
+            <div class="mb-3">
+                <h5 class="card-title">Company Information</h5>
+                <p class="card-text">
+
+                    {% for recruiter_data in recruiter_info %}
+
+                    {% if recruiter_data.company_info %}
+                <p class="card-text">{{recruiter_data.company_info|capfirst}}</p>
+
+                {% else %}
+                <p class="alert alert-dark">Company name not added yet!</p>
+
+                {% endif %}
+                {% endfor %}
+
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- Edit Profile Button -->
+            <div class="text-center mt-4">
+                <a href="{% url 'editProfile' %}" class="btn btn-primary">Edit Profile</a>
+
+                {% if request.user.user_type == 'recruiter' %}
+
+
+                {% for recruiter_data in recruiter_info %}
+
+                {% if recruiter_data.company_info %}
+
+                <a href="{% url 'editCompany' %}" class="btn btn-warning">Update Company Info</a>
+
+                {% else %}
+                <a href="{% url 'addCompany' %}" class="btn btn-success">Add Company Info</a>
+                {% endif %}
+
+                {% endfor %}
+                <a href="{% url 'createdJob' %}" class="btn btn-success">Created Job</a>
+                <a href="{% url 'addJob' %}" class="btn btn-warning">Add Job</a>
+
+                {% endif %}
+
+
+
+
+                {% if request.user.user_type == 'job_seeker' %}
+                {% for seeker_data in seeker_info %}
+                {% if seeker_data.skills %}
+                <a href="{% url 'editSkill' seeker_data.id %}" class="btn btn-success">Update Skill</a>
+
+                {% else %}
+                <a href="{% url 'addSkill' %}" class="btn btn-success">Set Skill</a>
+                {% endif %}
+
+                {% endfor %}
+
+                <a href="{% url 'appliedJob' %}" class="btn btn-warning">Applied Job</a>
+
+
+                {% endif %}
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

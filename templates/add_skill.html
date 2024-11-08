@@ -1,0 +1,34 @@
+{% extends 'common/base.html' %}
+
+
+{% block body %}
+<div class="container mt-5">
+
+    <h2 class="text-center">Add Skill</h2>
+
+    <form class="mt-4 p-4 border rounded bg-light" action="" method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <!-- Skills -->
+        <div class="mb-3">
+            <label for="skills" class="form-label">Skills</label>
+            <input type="text" class="d-none" value="{{request.user.id}}" name="user_id">
+            <select type="text" class="form-control" id="skills" name="skills" required>
+                <option value="">Select</option>
+                <option value="programming">Programming</option>
+                <option value="networking">Networking</option>
+                <option value="hardware">Hardware</option>
+            </select>
+        </div>
+
+
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Set Skill</button>
+        </div>
+    </form>
+</div>
+
+{% endblock body %}

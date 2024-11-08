@@ -138,24 +138,28 @@ def editCompany(req):
 
     current_user = req.user
 
-    recruiter_profile = RecruiterModel.objects.get(user=current_user)
-    
-
-    if req.method == 'POST':
-        
+    if current_user == 'recruiter':
         recruiter_profile = RecruiterModel.objects.get(user=current_user)
-        
-        recruiter_profile.company_info = req.POST.get('company')
-
-        recruiter_profile.save()
-        
-        messages.success(req, 'Company update successfully!')
-        return redirect('profilePage')
     
-    context = {
-        'recruiter_data': recruiter_profile, 
-    }
-    return render(req, 'edit_company.html',context)
+
+        if req.method == 'POST':
+            
+            recruiter_profile = RecruiterModel.objects.get(user=current_user)
+            
+            recruiter_profile.company_info = req.POST.get('company')
+
+            recruiter_profile.save()
+            
+            messages.success(req, 'Company update successfully!')
+            return redirect('profilePage')
+        
+        context = {
+            'recruiter_data': recruiter_profile, 
+        }
+        return render(req, 'edit_company.html',context)
+    else:
+        return render(req, 'edit_company.html')
+
 
 
 

@@ -4,6 +4,8 @@
 {% block body %}
 <div class="container mt-5">
     <h2 class="text-center">Apply for {{job.title}}</h2>
+
+    {% if request.user.user_type == 'job_seeker' %}
     <form class="mt-4 p-4 border rounded bg-light" action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -58,6 +60,12 @@
 
         </div>
     </form>
+    {% else %}
+    <div class="alert alert-warning text-center mt-4">
+        <h4>Recruiter can't apply for a job!</h4>
+    </div>
+    {% endif %}
+
 </div>
 
 {% endblock body %}

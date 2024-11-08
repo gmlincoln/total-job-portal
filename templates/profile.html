@@ -34,7 +34,15 @@
             <!-- User Type Section -->
             <div class="mb-3">
                 <h5 class="card-title">User Type</h5>
+
+                {% if request.user.user_type == 'job_seeker' %}
+                <p class="card-text">Job Seeker</p>
+                {% else %}
                 <p class="card-text">{{request.user.user_type|capfirst}}</p>
+
+                {% endif %}
+
+
             </div>
             {% if request.user.user_type == 'job_seeker' %}
             <!-- User Type Section -->

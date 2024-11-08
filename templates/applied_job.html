@@ -4,6 +4,8 @@
 {% block body %}
 
 <div class="container mt-5">
+
+    {% if request.user.user_type == 'job_seeker' %}
     <h2 class="text-center">Applied Job List</h2>
     <div class="table-responsive">
         <table class="table table-bordered table-hover mt-4 align-middle">
@@ -49,6 +51,12 @@
             </tbody>
         </table>
     </div>
+    {% else %}
+    <div class="alert alert-danger text-center">
+        <h4>You are not authorized to access this page!</h4>
+    </div>
+    {% endif %}
+
 </div>
 
 

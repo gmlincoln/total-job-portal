@@ -342,43 +342,47 @@ def deleteJob(req,job_id):
 @login_required
 def editJob(req, job_id):
 
+    if req.user.user_type == 'recruiter':
+        jobs = JobModel.objects.get(id=job_id)
 
-    jobs = JobModel.objects.get(id=job_id)
+        context = {
+            'jobs':jobs
+        }
 
-    context = {
-        'jobs':jobs
-    }
+        if req.method == 'POST':
+            jobId = req.POST.get('jobId')
+            jobTitle = req.POST.get('jobTitle')
+            numberOfOpenings = req.POST.get('numberOfOpenings')
+            category = req.POST.get('category')
+            description = req.POST.get('description')
+            skills = req.POST.get('skills')
 
-    if req.method == 'POST':
-        jobId = req.POST.get('jobId')
-        jobTitle = req.POST.get('jobTitle')
-        numberOfOpenings = req.POST.get('numberOfOpenings')
-        category = req.POST.get('category')
-        description = req.POST.get('description')
-        skills = req.POST.get('skills')
+            if req.FILES.get('companyLogo'):
+                company_logo = req.FILES.get('companyLogo')
+            else:
+                company_logo = jobs.company_logo
 
-        if req.FILES.get('companyLogo'):
-            company_logo = req.FILES.get('companyLogo')
-        else:
-            company_logo = jobs.company_logo
+            
+            job = JobModel(
+                id = jobId,
+                user = req.user,
+                title = jobTitle,
+                num_of_openings = numberOfOpenings,
+                category = category,
+                description = description,
+                skills = skills,
+                company_logo = company_logo
 
-        
-        job = JobModel(
-            id = jobId,
-            user = req.user,
-            title = jobTitle,
-            num_of_openings = numberOfOpenings,
-            category = category,
-            description = description,
-            skills = skills,
-            company_logo = company_logo
-
-        )
-        job.save()
-        return redirect('createdJob')
+            )
+            job.save()
+            return redirect('createdJob')
 
 
-    return render(req, 'edit_job.html', context)
+        return render(req, 'edit_job.html', context)
+    else:
+        return render(req, 'edit_job.html')
+
+    
 
 @login_required
 def viewJob(req, job_id):

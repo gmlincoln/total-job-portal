@@ -3,6 +3,8 @@
 
 {% block body %}
 <div class="container mt-5">
+
+    {% if request.user.user_type == 'recruiter' %}
     <h2 class="text-center">Edit Job</h2>
     <form class="mt-4 p-4 border rounded bg-light" action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -78,6 +80,16 @@
             <button type="submit" class="btn btn-primary">Update Job</button>
         </div>
     </form>
+    {% else %}
+    <div class="alert alert-danger text-center">
+        <h4>You are not authorized to access this page!</h4>
+    </div>
+    <div class="text-center">
+        <a href="{% url 'homePage' %}" class="btn btn-primary">Back to Homepage</a>
+
+    </div>
+    {% endif %}
+
 </div>
 
 {% endblock body %}

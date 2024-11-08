@@ -43,7 +43,12 @@
 
                 {% for seeker_data in seeker_info %}
 
+
+                {% if seeker_data.skills %}
                 <p class="card-text">{{seeker_data.skills|capfirst}}</p>
+                {% else %}
+                <p class="alert alert-dark">Skills not added yet!</p>
+                {% endif %}
 
                 {% endfor %}
 

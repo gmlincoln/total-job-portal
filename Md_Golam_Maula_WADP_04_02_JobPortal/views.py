@@ -41,6 +41,32 @@ def searchJob(req):
 
     return render(req, 'search.html', context)
 
+@login_required
+def dashboardPage(req):
+
+    
+    count = 0
+    flag_count = 0 
+
+    if req.user.user_type == 'job_seeker':
+        appliedJobs = jobApplyModel.objects.filter(user=req.user)
+        for job in appliedJobs:
+            if job:  
+                count += 1
+
+    elif req.user.user_type == 'recruiter':
+        jobs =  JobModel.objects.filter(user=req.user)
+        for job in jobs:
+            if job:  
+                flag_count += 1
+
+
+    context = {
+        'count':count,
+        'flag_count':flag_count,
+    }
+
+    return render(req, 'dashboard.html',context)
 
 @login_required
 def profilePage(req):

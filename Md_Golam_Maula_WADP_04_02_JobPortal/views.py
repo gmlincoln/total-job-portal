@@ -122,23 +122,26 @@ def addCompany(req):
 
     current_user = req.user
     
-    if req.method == 'POST':
+    if current_user.user_type == 'recruiter':
+        if req.method == 'POST':
 
-        company_instance = RecruiterModel.objects.get(user = current_user)
-        company_instance.company_info = req.POST.get('company')
-        
-        company_instance.save()
-        
-        return redirect('profilePage')
+            company_instance = RecruiterModel.objects.get(user = current_user)
+            company_instance.company_info = req.POST.get('company')
+            
+            company_instance.save()
+            
+            return redirect('profilePage')
     
-    return render(req, 'add_company.html')
+        return render(req, 'add_company.html')
+    else:
+        return redirect('homePage')
 
 @login_required
 def editCompany(req):
 
     current_user = req.user
 
-    if current_user == 'recruiter':
+    if current_user.user_type == 'recruiter':
         recruiter_profile = RecruiterModel.objects.get(user=current_user)
     
 
@@ -165,20 +168,24 @@ def editCompany(req):
 
 @login_required
 def skillMatchingPage(request):
+
     current_user = request.user
 
    
-    mySkill = current_user.JobSeeker.skills
-    jobs = JobModel.objects.filter(skills=mySkill)
-    
-    context = {
-        'jobs': jobs,
-        'mySkill': mySkill,
-    }
+    if current_user.user_type == 'job_seeker':
+        mySkill = current_user.JobSeeker.skills
+        jobs = JobModel.objects.filter(skills=mySkill)
+        
+        context = {
+            'jobs': jobs,
+            'mySkill': mySkill,
+        }
 
-    print(mySkill)  
+        print(mySkill)  
 
-    return render(request, "skill_match.html", context)
+        return render(request, "skill_match.html", context)
+    else:
+        return redirect('homePage')
 
 
 @login_required

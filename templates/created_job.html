@@ -6,6 +6,8 @@
 <div class="container mt-5">
     <h2 class="text-center">Job Listings</h2>
     <div class="table-responsive">
+
+        {% if jobs %}
         <table class="table table-bordered table-hover mt-4 align-middle">
             <thead class="table-primary text-center">
                 <tr>
@@ -41,27 +43,26 @@
                         <img src="/{{job.company_logo}}" alt="Company Logo" class="img-fluid" style="max-width: 50px;">
                     </td>
                     <td class="text-center d-flex justify-content-center align-items-center" style="height: 7rem;">
-                        <a href="{% url 'editJob' job.id %}"  class="btn btn-sm btn-outline-primary me-2">Edit</a>
-                        <a  href="{% url 'deleteJob' job.id %}" class="btn btn-sm btn-outline-danger me-2">Delete</a>
-                       
+                        <a href="{% url 'editJob' job.id %}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                        <a href="{% url 'deleteJob' job.id %}" class="btn btn-sm btn-outline-danger me-2">Delete</a>
+
                         <a href="{% url 'viewJob' job.id %}" class="btn btn-sm btn-outline-success">View</a>
                     </td>
                 </tr>
-                 
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="alert alert-warning text-center">Not a single job created!</p>
+        {% endif %}
+        <a href="{% url 'addJob' %}" class="btn btn-success center">Add Job</a>
 
-
-
+    </div>
 
 </div>
 
-                {% endfor %}
-
-            </tbody>
-        </table>
-    </div>
 
 
-   
 
 
 {% endblock body %}
